@@ -2091,6 +2091,19 @@ export const endpoints = [
                     type: 'string',
                     description: 'The Monada API access token.',
                     defaultValue: 'xxxxxxxxx',
+                },
+                {
+                    name: 'cursor',
+                    type: 'string',
+                    description: 'The cursor to start the pagination from when required.',
+                    optional: true,
+                    defaultValue: '',
+                },
+                {
+                    name: 'since',
+                    type: 'number',
+                    description: 'Filter opportunities to only include those modified after the given date (timestamp).',
+                    optional: true,
                 }
             ],
             response: {
