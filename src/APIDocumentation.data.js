@@ -2114,6 +2114,67 @@ export const endpoints = [
                     description: 'The number of total opportunities returned after enumerating until cursor is empty.',
                 }]
             }
-        }]
-    }
+        }, {
+            method: 'PUT',
+            path: '/opportunities/:opportunityId',
+            description: 'Update an opportunity.',
+            urlParams: [{
+                name: 'opportunityId',
+                type: 'string',
+                description: 'The UUID of the opportunity to update.',
+            }],
+            query: [
+                {
+                    name: 'organizationId',
+                    type: 'string',
+                    description: 'The ID of the organization holding the supplier.',
+                    defaultValue: 'ee95916e-9bef-445a-820f-cf45fed08804'
+                },
+                {
+                    name: 'accesstoken',
+                    type: 'string',
+                    description: 'The Monada API access token.',
+                    defaultValue: 'xxxxxxxxx',
+                },
+            ],
+            body: {
+                type: 'object',
+                description: '',
+                properties: [
+                    {
+                        name: 'opportunity',
+                        type: 'schema',
+                        description: 'The fields to update (only fields that are provided will be updated).',
+                        schema: () => objects.find(o => o.name === 'Opportunity'),
+                    }, {
+                        name: 'status',
+                        type: 'string',
+                        description: 'New status for the opportunity.',
+                        enum: ['deleted', 'sent-to-endcustomer', 'opened-by-customer', 'endcustomer-accepted', 'completed', 'lost', 'endcustomer-rejected'],
+                    }, {
+                        name: 'selected',
+                        type: 'array',
+                        description: 'The ids of all selected offers in the opportunity.',
+                        items: {
+                            type: 'string',
+                        },
+                    }, {
+                        name: 'owner',
+                        type: 'string',
+                        description: 'New owner for the opportunity (if you want to change the owner).',
+                    }, {
+                        name: 'reason',
+                        type: 'string',
+                        description: 'Reason for the status change.',
+                    }
+                ],
+            },
+            response: {
+                  type: 'schema',
+                  description: 'The updated supplier (all fields). If there are new updates in the timeline, they will also be filled with suggestions for actions.',
+                  schema: () => objects.find(o => o.name === 'Supplier'),
+              },
+          },
+      ]
+  }
 ];
